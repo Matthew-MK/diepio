@@ -1,9 +1,9 @@
-const WebSocket = require('ws');
 const config = require('./config.js');
 
 class Server {
     constructor() {
         this.data = null;
+        this.config = config;
         this.run();
     }
     run() {

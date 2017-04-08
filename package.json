@@ -15,9 +15,5 @@
   "bugs": {
     "url": "https://github.com/SharkFinProductions/diepio/issues"
   },
-  "homepage": "https://github.com/SharkFinProductions/diepio#readme",
-  "dependencies": {
-    "rson": "^1.5.8",
-    "ws": "^2.2.3"
-  }
+  "homepage": "https://github.com/SharkFinProductions/diepio#readme"
 }
