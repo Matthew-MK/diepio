@@ -17,8 +17,7 @@
   },
   "homepage": "https://github.com/SharkFinProductions/diepio#readme",
   "dependencies": {
-    "SmartConfig": "^1.4.9",
-    "asyncconsole": "^1.3.9",
-    "socket.io": "^1.7.2"
+    "rson": "^1.5.8",
+    "ws": "^2.2.3"
   }
 }
