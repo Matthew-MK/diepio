@@ -1,7 +1,8 @@
 //Configurations File
 module.exports = {
     server: { //Server Configurations
-        port: 3000 //Server Port
+        port: 3000, //Server Port
+        maximumPlayers: 100 //Maximum players
     },
     world: { //World Configurations
         width: 6000, //World Width
