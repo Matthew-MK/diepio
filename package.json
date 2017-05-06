@@ -4,20 +4,21 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+      "start": "node index.js"
   },
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/SharkFinProductions/diepio.git"
+      "type": "git",
+      "url": "https://github.com/SharkFinProductions/diepio.git"
   },
   "author": "SharkFin Productions",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/SharkFinProductions/diepio/issues"
+      "url": "https://github.com/SharkFinProductions/diepio/issues"
   },
   "homepage": "https://github.com/SharkFinProductions/diepio#readme",
   "dependencies": {
-    "asyncconsole": "^1.3.9",
-    "socket.io": "^1.7.3"
+      "asyncconsole": "^1.3.9",
+      "minirequest": "^1.3.5",
+      "socket.io": "^1.7.3"
   }
 }
