@@ -1,3 +1,5 @@
 'use strict';
-const Diep = require('./source/diep.js');
-const server = new Diep();
+const config = require('./source/settings/config.js');
+const colors = require('./source/settings/colors.js');
+const ss = require('./source/core/socketServer.js');
+const server = new ss(config, colors);
