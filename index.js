@@ -1,5 +1,6 @@
-'use strict';
-const config = require('./source/settings/config.js');
-const colors = require('./source/settings/colors.js');
-const ss = require('./source/core/socketServer.js');
-const server = new ss(config, colors);
+const Server = require('./source/index.js'),
+config = require('./config.js');
+
+var server = new Server(config);
+
+server.launch();

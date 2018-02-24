@@ -1,6 +1,3 @@
 module.exports = {
-    'help': function() {
-
-    },
-    stop: require('./lib/stop.js')
-};
+    help: require('./lib/help.js')
+}

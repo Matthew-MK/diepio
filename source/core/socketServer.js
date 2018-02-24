@@ -1,20 +1,38 @@
+const io = require('socket.io');
+const log = message => {
+    console.log('[SocketServer] '+message)
+};
 module.exports = class socketServer {
-    constructor(config, colors) {
+    constructor(config) {
         this.config = config;
-        this.colors = colors;
-        const Server = require('socket.io');
-        this.server = require('http').Server();
-        this.server.listen(this.config.server.port);
-        this.io = Server(this.server);
-        this.init();
+        this.server = io();
+
+        this.lobby = [];
     }
+
     init() {
-        console.log('Server running on port '+this.config.server.port);
-        this.io.on('connection', (socket) => {
-            console.log("A user has connected with the ip "+socket.request.connection.remoteAddress.split(":ffff:")[1]);
-            socket.emit('test', 'testing - server');
-            socket.emit('test', this.config);
-            socket.emit('test', this.colors);
-        });
+        this.server.listen(this.config.port)
+        this.listen();
+    }
+
+    listen() {
+        this.server.on('connection', socket => {
+            socket.join('lobby', () => {
+                this.lobby.push(socket);
+                this.broadcastTo('lobby', 'message', 'hello');
+            });
+
+            socket.on('disconnect', data => {
+                this.lobby.splice(this.lobby.indexOf(socket), 1);
+            });
+
+            socket.on('message', data => {
+                log(data)
+            });
+        })
+    }
+
+    broadcastTo(room, event, data) {
+        this.server.to(room).emit(event, data);
     }
 }
