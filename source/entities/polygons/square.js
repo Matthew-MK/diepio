@@ -1,4 +1,4 @@
-const config = require('../../../config.js'),
+const config = require('../../config.js'),
     polygon = require('./polygon.js');
 module.exports = class square extends polygon {
     constructor(x, y, r, d, vel, sdir) {
