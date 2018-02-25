@@ -1,5 +1,5 @@
 const config = require('../../config.js');
-module.exports = class player {
+module.exports = class tank {
     constructor(id, ip, sid) {
         this.nick = '';
         this.tank = 1;

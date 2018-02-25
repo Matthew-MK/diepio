@@ -5,9 +5,10 @@ const log = message => {
 };
 
 module.exports = class socketServer {
-    constructor(config) {
+    constructor(config, serv) {
         this.config = config;
         this.server = io();
+        this.serv = serv;
 
         this.lobby = [];
     }
@@ -19,7 +20,7 @@ module.exports = class socketServer {
 
     listen() {
         this.server.on('connection', socket => {
-            socketEventManager.newuser(socket);
+            socketEventManager.newuser(socket, this.serv);
             socket.join('lobby', () => {
                 this.lobby.push(socket);
                 this.broadcastTo('lobby', 'message', 'hello');

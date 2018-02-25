@@ -7,14 +7,19 @@ const log = message => {
 
 module.exports = class server {
     constructor(config) {
+        this.r = 0;
         this.config = config;
-        this.ioServer = new socketServer(config);
+        this.ioServer = new socketServer(config, this);
         this.entityServer = new entityServer(config);
 
         this.id = 1;
     }
 
     launch() {
+        /*setInterval(()=>{
+            if(this.entityServer.getEntities().get('tank')) console.log(this.entityServer.getEntities().get('tank').length)
+        }, 1000/60)*/
+        this.r++;
         this.ioServer.init();
         log(`Server listening on port ${this.config.port}!`);
         setTimeout(()=>this.ioServer.broadcastTo('lobby', 'message', 'Hello this is the server!'), 1000)
