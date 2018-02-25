@@ -1,7 +1,9 @@
 const io = require('socket.io');
+const socketEventManager = require('./socketEventManager.js');
 const log = message => {
     console.log('[SocketServer] '+message)
 };
+
 module.exports = class socketServer {
     constructor(config) {
         this.config = config;
@@ -17,6 +19,7 @@ module.exports = class socketServer {
 
     listen() {
         this.server.on('connection', socket => {
+            socketEventManager.newuser(socket);
             socket.join('lobby', () => {
                 this.lobby.push(socket);
                 this.broadcastTo('lobby', 'message', 'hello');

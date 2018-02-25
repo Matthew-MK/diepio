@@ -10,6 +10,8 @@ module.exports = class server {
         this.config = config;
         this.ioServer = new socketServer(config);
         this.entityServer = new entityServer(config);
+
+        this.id = 1;
     }
 
     launch() {
