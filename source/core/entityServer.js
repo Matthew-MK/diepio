@@ -1,6 +1,7 @@
 module.exports = class entityServer {
-    constructor(config) {
+    constructor(config, serv) {
         this.entities = new Map();
+        this.serv = serv;
     }
 
     addEntity(type, entity) {
