@@ -1,5 +1,3 @@
-const main = require('../../index.js');
-console.log(main)
 const entities = require('../entities/index.js');
 var id = 1;
 module.exports = {

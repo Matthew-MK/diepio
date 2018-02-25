@@ -3,6 +3,20 @@ config = require('./config.js');
 
 var server = new Server(config);
 
-module.exports = server;
-
 server.launch();
+
+/*
+var env = process.env,
+envDup = {
+    data: JSON.stringify({
+        x: 'a',
+        y: 'b',
+        items: []
+    })
+},
+child_process = require('child_process');
+child_process.exec('node test.js', {env: envDup}, (err, stdout, stderr) => {
+    if (err) throw err
+    x = stdout;
+})
+*/
