@@ -25,7 +25,7 @@ module.exports = class server {
         setTimeout(()=>this.ioServer.broadcastTo('lobby', 'message', 'Hello this is the server!'), 1000)
     }
 };
-
+/*
 const log2 = message => {
     console.log('[Client] '+message)
 };
@@ -36,4 +36,4 @@ const client = ioclient('http://localhost')
 client.on('message', data => {
       log2(data)
 })
-client.emit('message', 'hi')
+client.emit('message', 'hi')*/

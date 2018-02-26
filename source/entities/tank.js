@@ -107,18 +107,18 @@ module.exports = class tank {
         this.move();
         this.vel[0] /= 1.015;
         this.vel[1] /= 1.015;
-        if (this.vel[0] > this.stats.movementSpeed.value) this.vel[0] = this.stats.movementSpeed.value;
-        if (this.vel[1] > this.stats.movementSpeed.value) this.vel[1] = this.stats.movementSpeed.value;
-        if (this.vel[0] < -this.stats.movementSpeed.value) this.vel[0] = -this.stats.movementSpeed.value;
-        if (this.vel[1] < -this.stats.movementSpeed.value) this.vel[1] = -this.stats.movementSpeed.value;
-        if (this.x > config.w) this.x = config.w;
-        if (this.y > config.h) this.y = config.h;
-        if (this.x < 0) this.x = 0;
-        if (this.y < 0) this.y = 0;
-        if (this.chatting) return;
-        if (this.keyMap[38] || this.keyMap[87]) this.vel[1] -= 0.025;
-        if (this.keyMap[40] || this.keyMap[83]) this.vel[1] += 0.025;
-        if (this.keyMap[39] || this.keyMap[68]) this.vel[0] += 0.025;
-        if (this.keyMap[37] || this.keyMap[65]) this.vel[0] -= 0.025;
+        if (this.vel[0] > this.stats.movementSpeed.value) this.vel[0] = this.stats.movementSpeed.value
+        if (this.vel[1] > this.stats.movementSpeed.value) this.vel[1] = this.stats.movementSpeed.value
+        if (this.vel[0] < -this.stats.movementSpeed.value) this.vel[0] = -this.stats.movementSpeed.value
+        if (this.vel[1] < -this.stats.movementSpeed.value) this.vel[1] = -this.stats.movementSpeed.value
+        if (this.x > config.w) this.x = config.w
+        if (this.y > config.h) this.y = config.h
+        if (this.x < 0) this.x = 0
+        if (this.y < 0) this.y = 0
+        if (this.chatting) return
+        if (this.keyMap[38] || this.keyMap[87]) this.vel[1] -= 0.025
+        if (this.keyMap[40] || this.keyMap[83]) this.vel[1] += 0.025
+        if (this.keyMap[39] || this.keyMap[68]) this.vel[0] += 0.025
+        if (this.keyMap[37] || this.keyMap[65]) this.vel[0] -= 0.025
     }
 }
