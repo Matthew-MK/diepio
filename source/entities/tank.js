@@ -3,8 +3,8 @@ module.exports = class tank {
     constructor(id, ip, sid) {
         this.nick = '';
         this.tank = 1;
-        this.x = 0;
-        this.y = 0;
+        this.x = ~~(Math.random() * (config.w - 199) + 100);
+        this.y = ~~(Math.random() * (config.h - 199) + 100);
         this.vel = [0, 0];
         this.level = 1;
         this.score = 0;

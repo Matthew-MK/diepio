@@ -43,8 +43,6 @@ module.exports = class socketServer {
                 if(socket.user.playing) return
                 var tanks = this.serv.entityServer.getEntities().get('tank');
                 tanks[tanks.indexOf(socket.user)].nick = data;
-                tanks[tanks.indexOf(socket.user)].x = ~~(Math.random() * (this.config.w - 199) + 100);
-                tanks[tanks.indexOf(socket.user)].y = ~~(Math.random() * (this.config.h - 199) + 100);
                 tanks[tanks.indexOf(socket.user)].playing = true;
                 this.serv.entityServer.getEntities().set('tank', tanks);
                 this.server.emit('get players', this.serv.entityServer.getEntities().get('tank'));
