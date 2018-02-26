@@ -4,7 +4,10 @@ module.exports = class entityServer {
         this.entities = new Map();
         this.serv = serv;
 
-        this.updates = setInterval(async () => {
+        this.updating = false;
+
+        this.updates = setInterval(() => {
+            if(this.updating) return
             if(!this.entities.has('tank')) return
             var tanks = this.entities.get('tank');
             var envDup = {
@@ -17,15 +20,15 @@ module.exports = class entityServer {
                 if (err) throw err
                 var t = JSON.parse(stdout);
                 for(var each in t) {
-                    console.log(t.indexOf(each))
-                    tanks[t.indexOf(each)]
+                    tanks[t.indexOf(t[each])].x = t[t.indexOf(t[each])].x;
+                    tanks[t.indexOf(t[each])].y = t[t.indexOf(t[each])].y;
+                    tanks[t.indexOf(t[each])].chatting = t[t.indexOf(t[each])].chatting;
+                    tanks[t.indexOf(t[each])].vel = t[t.indexOf(t[each])].vel;
                 }
-
                 this.entities.set('tank', tanks)
+                this.updating = false;
             })
-            /*tanks.forEach(tank => {
-                tank.update();
-            })*/
+            this.updating = true;
 
         }, 1000/60)
     }
