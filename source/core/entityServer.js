@@ -7,61 +7,38 @@ const log = message => {
 module.exports = class entityServer {
     constructor(config, serv) {
         this.entities = new Map();
+        this.config = config;
         this.serv = serv;
 
         this.updating = false;
 
+        this.updates();
+    }
 
-        //
-        this.server = net.createServer(c => {
-            log('server connected');
+    updates() {
+        var server = net.createServer(c => { //'connection' listener
+            console.log('server connected');
             c.on('end', () => {
                 console.log('server disconnected');
             });
-            c.write(JSON.stringify({a: 'b'}));
+            c.on('error', error => {
+                console.log(error)
+            });
+            c.write('hello');
             c.pipe(c);
         });
-        this.server.listen(config.entityServerPort, () => {
-            log(`entityServer listening on port ${config.entityServerPort}!`);
+        server.on('connection', connection => {
+            connection.on('data', data => {
+                console.log(data.toString())
+            });
         });
-        this.server.on('connected', data => {
-            console.log(JSON.stringify(data))
-        })
-
-        child_process.exec('node source/childprocesses/tankUpdates.js', (err, stdout, stderr) => {
-            if (err) throw err
-            console.log(stdout)
-        });
-
-        //
-
-
-        /*this.updates = setInterval(() => {
-            if(this.updating) return
-            if(!this.entities.has('tank')) return
-            var tanks = this.entities.get('tank');
-            var envDup = {
-                data: JSON.stringify({
-                    tanks: tanks,
-                    config: config
-                })
-            }
-            child_process.exec('node source/childprocesses/tankUpdates.js', {env: envDup}, (err, stdout, stderr) => {
+        server.listen(this.config.entityServerPort, () => { //'listening' listener
+            console.log('server bound to port '+this.config.entityServerPort);
+            child_process.exec('node source/childprocesses/tankUpdates.js', (err, stdout, stderr) => {
                 if (err) throw err
-                console.log('hi')
-                console.log(stdout)
-                console.log('hey')
-                if(stdout === 'completed') return this.updating = false
-                var t = JSON.parse(stdout);
-                tanks[t.ind].x = t.tank.x;
-                tanks[t.ind].y = t.tank.y;
-                tanks[t.ind].chatting = t.tank.chatting;
-                tanks[t.ind].vel = t.tank.vel
-                this.entities.set('tank', tanks)
-            })
-            this.updating = true;
-
-        }, 1000/60)*/
+                console.log('stdout: '+stdout)
+            });
+        });
     }
 
     addEntity(type, entity) {
