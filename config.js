@@ -1,5 +1,6 @@
 module.exports = {
     port: 80,
+    entityServerPort: 3000,
     w: 3000,
     h: 3000,
     minimumSquares: 30,

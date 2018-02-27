@@ -1,4 +1,9 @@
-const child_process = require('child_process');
+const child_process = require('child_process'),
+net = require('net');
+const log = message => {
+    console.log('[entityServer] '+message)
+};
+
 module.exports = class entityServer {
     constructor(config, serv) {
         this.entities = new Map();
@@ -6,7 +11,32 @@ module.exports = class entityServer {
 
         this.updating = false;
 
-        this.updates = setInterval(() => {
+
+        //
+        this.server = net.createServer(c => {
+            log('server connected');
+            c.on('end', () => {
+                console.log('server disconnected');
+            });
+            c.write(JSON.stringify({a: 'b'}));
+            c.pipe(c);
+        });
+        this.server.listen(config.entityServerPort, () => {
+            log(`entityServer listening on port ${config.entityServerPort}!`);
+        });
+        this.server.on('connected', data => {
+            console.log(JSON.stringify(data))
+        })
+
+        child_process.exec('node source/childprocesses/tankUpdates.js', (err, stdout, stderr) => {
+            if (err) throw err
+            console.log(stdout)
+        });
+
+        //
+
+
+        /*this.updates = setInterval(() => {
             if(this.updating) return
             if(!this.entities.has('tank')) return
             var tanks = this.entities.get('tank');
@@ -18,19 +48,20 @@ module.exports = class entityServer {
             }
             child_process.exec('node source/childprocesses/tankUpdates.js', {env: envDup}, (err, stdout, stderr) => {
                 if (err) throw err
+                console.log('hi')
+                console.log(stdout)
+                console.log('hey')
+                if(stdout === 'completed') return this.updating = false
                 var t = JSON.parse(stdout);
-                for(var each in t) {
-                    tanks[t.indexOf(t[each])].x = t[t.indexOf(t[each])].x;
-                    tanks[t.indexOf(t[each])].y = t[t.indexOf(t[each])].y;
-                    tanks[t.indexOf(t[each])].chatting = t[t.indexOf(t[each])].chatting;
-                    tanks[t.indexOf(t[each])].vel = t[t.indexOf(t[each])].vel;
-                }
+                tanks[t.ind].x = t.tank.x;
+                tanks[t.ind].y = t.tank.y;
+                tanks[t.ind].chatting = t.tank.chatting;
+                tanks[t.ind].vel = t.tank.vel
                 this.entities.set('tank', tanks)
-                this.updating = false;
             })
             this.updating = true;
 
-        }, 1000/60)
+        }, 1000/60)*/
     }
 
     addEntity(type, entity) {
