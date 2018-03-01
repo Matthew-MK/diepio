@@ -1,8 +1,6 @@
 const child_process = require('child_process'),
-net = require('net');
-const log = message => {
-    console.log('[entityServer] '+message)
-};
+net = require('net'),
+log = message => console.log('[entityServer] '+message)
 
 module.exports = class entityServer {
     constructor(config, serv) {
@@ -17,9 +15,9 @@ module.exports = class entityServer {
 
     updates() {
         this.server = net.createServer(c => { //'connection' listener
-            console.log('server connected');
-            c.on('end', () => console.log('server disconnected'));
-            c.on('error', error => console.log(error));
+            log('server connected');
+            c.on('end', () => log('server disconnected'));
+            c.on('error', error => log(error));
         });
         this.server.on('connection', connection => {
             var msg = {
@@ -28,7 +26,7 @@ module.exports = class entityServer {
             };
             connection.write(JSON.stringify(msg));
             connection.on('data', data => {
-                console.log(
+                log(
                 JSON.parse(data.toString()).type === 'send' ?
                 'recieved: '+JSON.parse(data.toString()).data :
                 'sent: '+JSON.parse(data.toString()).data
@@ -36,10 +34,10 @@ module.exports = class entityServer {
             });
         });
         this.server.listen(this.config.entityServerPort, () => { //'listening' listener
-            console.log('server bound to port '+this.config.entityServerPort);
+            log('server bound to port '+this.config.entityServerPort);
             child_process.exec('node source/childprocesses/tankUpdates.js', (err, stdout, stderr) => {
                 if (err) throw err
-                console.log('stdout: '+stdout)
+                log('stdout: '+stdout)
             });
         });
     }
