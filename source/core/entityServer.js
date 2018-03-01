@@ -16,23 +16,26 @@ module.exports = class entityServer {
     }
 
     updates() {
-        var server = net.createServer(c => { //'connection' listener
+        this.server = net.createServer(c => { //'connection' listener
             console.log('server connected');
-            c.on('end', () => {
-                console.log('server disconnected');
-            });
-            c.on('error', error => {
-                console.log(error)
-            });
-            c.write('hello');
-            c.pipe(c);
+            c.on('end', () => console.log('server disconnected'));
+            c.on('error', error => console.log(error));
         });
-        server.on('connection', connection => {
+        this.server.on('connection', connection => {
+            var msg = {
+                type: 'send',
+                data: 'hello'
+            };
+            connection.write(JSON.stringify(msg));
             connection.on('data', data => {
-                console.log(data.toString())
+                console.log(
+                JSON.parse(data.toString()).type === 'send' ?
+                'recieved: '+JSON.parse(data.toString()).data :
+                'sent: '+JSON.parse(data.toString()).data
+                )
             });
         });
-        server.listen(this.config.entityServerPort, () => { //'listening' listener
+        this.server.listen(this.config.entityServerPort, () => { //'listening' listener
             console.log('server bound to port '+this.config.entityServerPort);
             child_process.exec('node source/childprocesses/tankUpdates.js', (err, stdout, stderr) => {
                 if (err) throw err
