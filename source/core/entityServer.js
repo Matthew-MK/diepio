@@ -8,8 +8,6 @@ module.exports = class entityServer {
         this.config = config;
         this.serv = serv;
 
-        this.updating = false;
-
         this.updates();
     }
 
@@ -22,6 +20,7 @@ module.exports = class entityServer {
         this.server.on('connection', connection => {
             var msg = {
                 type: 'send',
+                call: 'message',
                 data: 'hello'
             };
             connection.write(JSON.stringify(msg));
