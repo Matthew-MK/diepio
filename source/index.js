@@ -1,5 +1,6 @@
 const socketServer = require('./core/socketServer.js'),
-entityServer = require('./core/entityServer.js');
+entityServer = require('./core/entityServer.js'),
+childProcessManager = require('./core/childProcessManager.js');
 
 const log = message => {
     console.log('[Main] '+message)
@@ -9,6 +10,7 @@ module.exports = class server {
     constructor(config) {
         this.r = 0;
         this.config = config;
+        this.childProcessManager = new childProcessManager(config, this);
         this.ioServer = new socketServer(config, this);
         this.entityServer = new entityServer(config, this);
 
@@ -22,7 +24,7 @@ module.exports = class server {
         this.r++;
         this.ioServer.init();
         log(`Server listening on port ${this.config.port}!`);
-        setTimeout(()=>this.ioServer.broadcastTo('lobby', 'message', 'Hello this is the server!'), 1000)
+        setTimeout(()=>this.childProcessManager.endProcess('tankUpdates'), 1000)
     }
 };
 /*

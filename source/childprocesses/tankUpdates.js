@@ -8,7 +8,7 @@ s.on("data", data => {
         call: 'return',
         data: JSON.parse(data.toString()).data
     };
-    s.write(JSON.stringify(msg));
+    //s.write(JSON.stringify(msg));
 });
 
 s.connect(config.entityServerPort, () => {
@@ -17,5 +17,7 @@ s.connect(config.entityServerPort, () => {
         call: 'message',
         data: 'Hello!'
     };
+    setInterval(() => {
     s.write(JSON.stringify(msg));
+  }, 100)
 });
