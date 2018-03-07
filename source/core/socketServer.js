@@ -26,13 +26,8 @@ module.exports = class socketServer {
             socketEventManager.newuser(socket, this.serv, this, this.config);
             socketEventManager.updateNewUser(this.serv, this, this.config);
 
-            /*socket.join('lobby', () => {
-                this.lobby.push(socket);
-                this.broadcastTo('lobby', 'message', 'hello');
-            });*/
-
             socket.on('disconnect', data => {
-                this.lobby.splice(this.lobby.indexOf(socket), 1);
+
             });
 
             socket.on('message', data => {

@@ -1,5 +1,5 @@
 module.exports = {
-    port: 80,
+    port: 100,
     entityServerPort: 3000,
     w: 3000,
     h: 3000,
