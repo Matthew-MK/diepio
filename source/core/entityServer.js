@@ -1,5 +1,5 @@
 const net = require('net'),
-log = message => console.log('[entityServer] '+message)
+log = message => console.log('[entityServer] '+message);
 
 module.exports = class entityServer {
     constructor(config, serv) {

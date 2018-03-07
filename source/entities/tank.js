@@ -1,4 +1,5 @@
 const config = require('../../config.js');
+
 module.exports = class tank {
     constructor(id, ip, sid) {
         this.nick = '';

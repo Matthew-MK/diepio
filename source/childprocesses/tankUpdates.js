@@ -15,7 +15,7 @@ s.connect(config.entityServerPort, () => {
     var msg = {
         type: 'send',
         call: 'message',
-        data: 'Hello!'
+        data: 'test'
     };
     s.write(JSON.stringify(msg));
 });

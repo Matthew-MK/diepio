@@ -1,8 +1,6 @@
-const io = require('socket.io');
-const socketEventManager = require('./socketEventManager.js');
-const log = message => {
-    console.log('[SocketServer] '+message)
-};
+const io = require('socket.io'),
+socketEventManager = require('./socketEventManager.js'),
+log = message => console.log('[SocketServer] '+message);
 
 module.exports = class socketServer {
     constructor(config, serv) {

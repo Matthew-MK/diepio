@@ -1,3 +1,1 @@
-module.exports = (user, args) => {
-    console.log('help')
-};
+module.exports = (user, args) => console.log('help');

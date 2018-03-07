@@ -1,10 +1,7 @@
 const socketServer = require('./core/socketServer.js'),
 entityServer = require('./core/entityServer.js'),
-childProcessManager = require('./core/childProcessManager.js');
-
-const log = message => {
-    console.log('[Main] '+message)
-};
+childProcessManager = require('./core/childProcessManager.js'),
+log = message => console.log('[Main] '+message);
 
 module.exports = class server {
     constructor(config) {

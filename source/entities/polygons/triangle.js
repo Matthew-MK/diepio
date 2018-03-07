@@ -1,5 +1,6 @@
 const config = require('../../config.js'),
     polygon = require('./polygon.js');
+
 module.exports = class triangle extends polygon {
     constructor(x, y, r, d, vel, sdir) {
         super(

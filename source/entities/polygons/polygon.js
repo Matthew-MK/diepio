@@ -1,4 +1,5 @@
 const config = require('../../config.js');
+
 module.exports = class polygon {
     constructor(x, y, r, d, vel, hp, sdir) {
         this.x = x;

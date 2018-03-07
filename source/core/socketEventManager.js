@@ -1,5 +1,6 @@
 const entities = require('../entities/index.js');
 var id = 1;
+
 module.exports = {
     newuser(socket, serv, socketServer, config) {
         console.log('new user '+socket.id)

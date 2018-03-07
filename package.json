@@ -1,7 +1,7 @@
 {
     "name": "diepio",
     "version": "1.0.0",
-    "description": "",
+    "description": "diep.io clone",
     "main": "index.js",
     "scripts": {
         "start": "node index.js"
