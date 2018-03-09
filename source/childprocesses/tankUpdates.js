@@ -3,12 +3,18 @@ config = require('../../config.js'),
 s = new net.Socket();
 
 s.on("data", data => {
+    var d = JSON.parse(data);
+    if(d.type === 'send' && d.call === 'kill') {
+        s.end();
+        s.destroy();
+        process.exit(d.data);
+    }
     var msg = {
         type: 'recieve',
         call: 'return',
-        data: JSON.parse(data.toString()).data
+        data: JSON.parse(data.toString())
     };
-    //s.write(JSON.stringify(msg));
+    s.write(JSON.stringify(msg));
 });
 
 s.connect(config.entityServerPort, () => {
@@ -17,5 +23,5 @@ s.connect(config.entityServerPort, () => {
         call: 'message',
         data: 'test'
     };
-    s.write(JSON.stringify(msg));
+    //setInterval(()=>s.write(JSON.stringify(msg)), 500)
 });

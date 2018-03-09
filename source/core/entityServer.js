@@ -3,6 +3,7 @@ log = message => console.log('[entityServer] '+message);
 
 module.exports = class entityServer {
     constructor(config, serv) {
+        this.servers = new Map();
         this.entities = new Map();
         this.config = config;
         this.serv = serv;
@@ -15,14 +16,16 @@ module.exports = class entityServer {
 
     init() {
         this.serv.childProcessManager.createProcess('tankUpdates', 'tankUpdates.js')
-        this.server = net.createServer(c => { //'connection' listener
+        this.servers.set('tankUpdates', net.createServer(c => { //'connection' listener
             log('server connected');
             c.on('end', () => log('server disconnected'));
             c.on('error', error => log(error));
-        })
+        }));
+        log(`Launched tankUpdates server`);
     }
 
     updates() {
+        this.server = this.servers.get('tankUpdates');
         this.server.on('connection', connection => {
             this.connections.push(connection)
             var msg = {
@@ -30,7 +33,7 @@ module.exports = class entityServer {
                 call: 'message',
                 data: 'hello'
             };
-            connection.write(JSON.stringify(msg));
+            //connection.write(JSON.stringify(msg));
             connection.on('data', data => {
                 log(
                 JSON.parse(data.toString()).type === 'send' ?
@@ -51,7 +54,7 @@ module.exports = class entityServer {
                     call: 'message',
                     data: 'test'
                 };
-                for(var each in this.connections) this.connections[each].write(JSON.stringify(msg));
+                //for(var each in this.connections) this.connections[each].write(JSON.stringify(msg));
             }, 1000)
         });
     }
@@ -72,5 +75,20 @@ module.exports = class entityServer {
 
     getEntities() {
         return this.entities
+    }
+
+    getServers() {
+        return this.servers
+    }
+
+    killServer(server) {
+        var msg = {
+            type: 'send',
+            call: 'kill',
+            data: 0
+        };
+        this.serv.childProcessManager.endProcess(server)
+        for(var each in this.connections) this.entityServer.getServers().connections[each].write(JSON.stringify(msg))
+        this.servers.delete(server)
     }
 };

@@ -14,6 +14,15 @@ module.exports = class server {
     launch() {
         this.ioServer.init();
         log(`Server listening on port ${this.config.port}!`);
-        //setTimeout(()=>this.childProcessManager.endProcess('tankUpdates'), 1000)
+        setTimeout(() => {
+            var msg = {
+                type: 'send',
+                call: 'kill',
+                data: 0
+            };
+            for(var each in this.entityServer.connections) this.entityServer.connections[each].write(JSON.stringify(msg))
+            this.entityServer.getServers().delete('tankUpdates')
+            this.childProcessManager.endProcess('tankUpdates')
+        }, 2000);
     }
 };
