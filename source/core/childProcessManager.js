@@ -20,11 +20,8 @@ module.exports = class childProcessManager {
 
     endProcess(name) {
         if(!this.processes.has(name)) return console.log(name+' child process does not exist!')
-        var proc = this.processes.get(name)
-        proc.kill();
-        this.processes.set(name, proc);
         this.processes.delete(name);
-        log(`Killed ${name} Child Process`);
+        log(`Ended ${name} Child Process`);
     }
 
     getProcesses() {
